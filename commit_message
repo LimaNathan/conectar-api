@@ -1,11 +1,7 @@
-feat: Implement user authentication and registration
+feat: implementa controle de acesso baseado em roles (RBAC)
 
-This commit introduces user authentication and registration functionalities, including JWT-based authentication, validation, and necessary DTOs.
-
-Key features and changes include:
-- **Auth Module:** Implemented an `auth` module with JWT-based authentication, including a `JwtStrategy` for validating tokens.
-- **User Module:** Updated the `user` module to export the `UserService` and include the `PrismaService`.
-- **Controllers:** Added `register` and `login` endpoints to the `AuthController`.
-- **DTOs:** Created and updated DTOs for user authentication, creation, and payload, with the addition of `class-validator` for input validation.
-- **Dependencies:** Added `class-validator` to handle input validation.
-- **Linting:** Updated ESLint configuration with a new rule.
+- Adiciona o decorator `@Roles()` para definir as roles necessárias para acessar um endpoint.
+- Cria um `RolesGuard` para verificar se o usuário tem a role necessária.
+- Protege o endpoint de registro de usuário, permitindo o acesso apenas a usuários com a role `ADMIN`.
+- Adiciona validação para o DTO de autenticação.
+- Melhora o tratamento de erros no serviço de autenticação.
