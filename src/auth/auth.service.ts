@@ -1,10 +1,11 @@
 import {
   ConflictException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../user/user.service';
 
 import * as bcrypt from 'bcrypt';
 import { UserCreateDTO } from 'src/user/dto/create_user.dto';
@@ -21,7 +22,7 @@ export class AuthService {
     const user = await this.userService.findByEmail(data.email);
 
     if (!user || !user.password) {
-      throw new UnauthorizedException('Credenciais inválidas.');
+      throw new NotFoundException('Usuário não está cadastrado.');
     }
 
     const valid = await bcrypt.compare(data.password, user.password);
@@ -44,24 +45,17 @@ export class AuthService {
       role: user.role,
     };
 
+    await this.userService.updateLastLogin(user.id);
+
     return {
       access_token: this.jwtService.sign(payload),
-      user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        role: user.role,
-      },
     };
   }
 
   async register(data: UserCreateDTO) {
     const exists = await this.userService.findByEmail(data.email);
     if (exists) throw new ConflictException('Email já cadastrado.');
-    await this.userService.create(data);
-    const authUser = new AuthUserDTO();
-    authUser.email = data.email;
-    authUser.password = data.password;
-    return this.login(authUser);
+
+    return await this.userService.create(data);
   }
 }

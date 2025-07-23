@@ -1,7 +1,33 @@
-feat: implementa controle de acesso baseado em roles (RBAC)
+feat: Implementa autenticação e gerenciamento de usuários
 
-- Adiciona o decorator `@Roles()` para definir as roles necessárias para acessar um endpoint.
-- Cria um `RolesGuard` para verificar se o usuário tem a role necessária.
-- Protege o endpoint de registro de usuário, permitindo o acesso apenas a usuários com a role `ADMIN`.
-- Adiciona validação para o DTO de autenticação.
-- Melhora o tratamento de erros no serviço de autenticação.
+Este commit introduz a funcionalidade completa de autenticação e gerenciamento de usuários na API.
+
+Principais alterações:
+
+- **Autenticação:**
+  - Adiciona endpoints de login e registro (`/auth/login`, `/auth/register`).
+  - Implementa autenticação baseada em JWT (JSON Web Tokens).
+  - Cria `JwtAuthGuard` e `RolesGuard` para proteger rotas.
+  - Adiciona o `RolesDecorator` para controle de acesso baseado em papéis.
+
+- **Gerenciamento de Usuários:**
+  - Adiciona um endpoint para atualização de dados do usuário (`/user/:id`).
+  - Implementa a lógica para criar, buscar e atualizar usuários no `UserService`.
+
+- **Integração com Prisma:**
+  - Configura o `PrismaModule` e o `PrismaService` para interação com o banco de dados.
+  - Adiciona um script de seed (`prisma/seed.ts`) para criar um usuário administrador padrão.
+
+- **Testes:**
+  - Adiciona testes unitários para `AuthService` e `UserService`.
+  - Remove os testes de controller (`.spec.ts`) que não serão utilizados.
+
+- **DTOs e Entidades:**
+  - Cria DTOs para criação (`UserCreateDTO`), atualização (`UserUpdateDTO`) e autenticação (`AuthUserDTO`) de usuários.
+  - Define a entidade `UserEntity`.
+
+- **Documentação:**
+  - Adiciona documentação do Swagger para os novos endpoints de autenticação e usuário.
+
+- **Dependências:**
+  - Adiciona as dependências necessárias para as novas funcionalidades, como `@nestjs/jwt`, `@nestjs/passport`, `passport-jwt`, `bcrypt`, etc.
