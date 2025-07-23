@@ -1,0 +1,12 @@
+feat: Implement user authentication and registration
+
+This commit introduces the initial setup for the Conectar API, including user authentication and registration functionalities.
+
+Key features and changes include:
+- **NestJS Project Setup:** Initializes a new NestJS project with all the necessary configurations.
+- **Authentication Module:** Implements an `auth` module with JWT-based authentication. It provides services for user validation, login, and registration.
+- **User Module:** Adds a `user` module to manage user data, including creation and retrieval by email.
+- **Prisma Integration:** Integrates Prisma for database operations and includes a `PrismaService`.
+- **Linting and Formatting:** Configures ESLint and Prettier to ensure code quality and consistency.
+- **Testing:** Includes initial unit and e2e tests for the application.
+- **Documentation:** Adds a README file with setup and usage instructions.
