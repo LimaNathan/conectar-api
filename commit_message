@@ -1,33 +1,24 @@
-feat: Implementa autenticação e gerenciamento de usuários
+feat: Adiciona CRUD de clientes e paginação de usuários
 
-Este commit introduz a funcionalidade completa de autenticação e gerenciamento de usuários na API.
+Este commit introduz a funcionalidade de CRUD para clientes e implementa a paginação e filtros na listagem de usuários.
 
 Principais alterações:
 
-- **Autenticação:**
-  - Adiciona endpoints de login e registro (`/auth/login`, `/auth/register`).
-  - Implementa autenticação baseada em JWT (JSON Web Tokens).
-  - Cria `JwtAuthGuard` e `RolesGuard` para proteger rotas.
-  - Adiciona o `RolesDecorator` para controle de acesso baseado em papéis.
+- **Módulo de Clientes:**
+  - Adiciona o `ClientsModule`, `ClientsController` e `ClientsService` para o gerenciamento de clientes.
+  - Cria as rotas de CRUD para clientes.
 
-- **Gerenciamento de Usuários:**
-  - Adiciona um endpoint para atualização de dados do usuário (`/user/:id`).
-  - Implementa a lógica para criar, buscar e atualizar usuários no `UserService`.
+- **Paginação de Usuários:**
+  - Implementa a paginação na listagem de usuários, utilizando os parâmetros `page` e `size`.
+  - Adiciona o `PaginationQueryDTO` para validar os parâmetros de paginação.
+  - Adiciona o `OrderDirection` enum para a ordenação dos resultados.
 
-- **Integração com Prisma:**
-  - Configura o `PrismaModule` e o `PrismaService` para interação com o banco de dados.
-  - Adiciona um script de seed (`prisma/seed.ts`) para criar um usuário administrador padrão.
+- **Filtros de Usuários:**
+  - Adiciona a funcionalidade de filtrar usuários por nome, e-mail e role.
+  - Adiciona um endpoint para listar usuários inativos (sem login há mais de 30 dias).
 
-- **Testes:**
-  - Adiciona testes unitários para `AuthService` e `UserService`.
-  - Remove os testes de controller (`.spec.ts`) que não serão utilizados.
-
-- **DTOs e Entidades:**
-  - Cria DTOs para criação (`UserCreateDTO`), atualização (`UserUpdateDTO`) e autenticação (`AuthUserDTO`) de usuários.
-  - Define a entidade `UserEntity`.
-
-- **Documentação:**
-  - Adiciona documentação do Swagger para os novos endpoints de autenticação e usuário.
+- **Exclusão de Usuários:**
+  - Adiciona um endpoint para a exclusão de usuários.
 
 - **Dependências:**
-  - Adiciona as dependências necessárias para as novas funcionalidades, como `@nestjs/jwt`, `@nestjs/passport`, `passport-jwt`, `bcrypt`, etc.
+  - Adiciona a dependência `class-transformer` para a validação dos DTOs.
