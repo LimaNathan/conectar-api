@@ -1,15 +1,23 @@
-import { IsEnum, IsInt, IsOptional, IsString, Min } from 'class-validator';
-import { Type } from 'class-transformer';
-import { OrderDirection } from '../enum/order_direction.enum';
 import { ApiProperty } from '@nestjs/swagger';
-import { Role } from '@prisma/client';
-export class PaginationQueryDTO {
+import { Type } from 'class-transformer';
+import {
+  IsArray,
+  IsEnum,
+  IsInt,
+  IsOptional,
+  IsString,
+  Min,
+} from 'class-validator';
+import { OrderDirection } from 'src/user/enum/order_direction.enum';
+
+export class ClientsPaginationQueryDTO {
   @Type(() => Number)
   @IsInt()
   @Min(1)
   @IsOptional()
   @ApiProperty({ example: 1 })
   page?: number = 1;
+
   @Type(() => Number)
   @IsInt()
   @Min(1)
@@ -24,13 +32,16 @@ export class PaginationQueryDTO {
 
   @IsOptional()
   @IsString()
-  name?: string;
-
+  presentationName?: string;
+  
   @IsOptional()
   @IsString()
-  email?: string;
+  cnpj?: string;
+  @IsOptional()
+  @IsString()
+  corporateReason?: string;
 
   @IsOptional()
-  @IsEnum(Role)
-  role?: Role;
+  @IsArray()
+  tags?: string[];
 }

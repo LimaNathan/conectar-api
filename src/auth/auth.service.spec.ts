@@ -33,6 +33,7 @@ describe('AuthService', () => {
         {
           provide: UserService,
           useValue: {
+            updateLastLogin: jest.fn(),
             findByEmail: findByEmailMock,
             create: jest.fn(),
           },

@@ -12,7 +12,7 @@ import {
 } from '@nestjs/swagger';
 import { Roles } from './decorator/roles.decorator';
 
-@ApiTags('Auth')
+@ApiTags('1. Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}

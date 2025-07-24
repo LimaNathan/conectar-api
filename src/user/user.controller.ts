@@ -18,12 +18,13 @@ import {
 import { Roles } from 'src/auth/decorator/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-aut.guard';
 import { RolesGuard } from 'src/auth/guards/role.guard';
-import { PaginationQueryDTO } from './dto/paginated_query.dto';
+
+import { UserPaginationQueryDTO } from './dto/user_pagination_query.dto';
 import { UserUpdateDTO } from './dto/user_update.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
-@ApiTags('User')
+@ApiTags('2. User')
 export class UserController {
   constructor(private userService: UserService) {}
 
@@ -51,13 +52,14 @@ export class UserController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
   @Get('/paginated')
-  async findAllPage(@Query('page') query: PaginationQueryDTO) {
+  async findAllPage(@Query() query: UserPaginationQueryDTO) {
     const { page, size, order, name, email, role } = query;
-    return this.userService.findAllPaginated(page, size, order, {
+    const filters = {
       name,
       email,
       role,
-    });
+    };
+    return this.userService.findAllPaginated(page, size, order, filters);
   }
   @ApiOperation({ summary: 'Busca os usuários do sistema de forma paginada.' })
   @ApiBearerAuth()
@@ -65,18 +67,20 @@ export class UserController {
   @Roles('ADMIN')
   @Get('/paginated/inactive')
   async findAllPageWithoutLoginUntilThirtyDays(
-    @Query('page') query: PaginationQueryDTO,
+    @Query() query: UserPaginationQueryDTO,
   ) {
     const { page, size, order, name, email, role } = query;
+
+    const filters = {
+      name,
+      email,
+      role,
+    };
     return this.userService.findAllUsersWithoutLoginUntilThirtyDays(
       page,
       size,
       order,
-      {
-        name,
-        email,
-        role,
-      },
+      filters,
     );
   }
 

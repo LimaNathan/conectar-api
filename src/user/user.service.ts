@@ -3,11 +3,11 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { UserCreateDTO } from './dto/create_user.dto';
+import { Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../prisma/prisma_service';
+import { UserCreateDTO } from './dto/create_user.dto';
 import { UserUpdateDTO } from './dto/user_update.dto';
-import { Role } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -112,7 +112,7 @@ export class UserService {
     const [users, total] = await Promise.all([
       this.prisma.user.findMany({
         skip,
-        take: size,
+        take: Number(size),
         orderBy: { createdAt: order },
         where,
         select: {
@@ -174,7 +174,7 @@ export class UserService {
     const [users, total] = await Promise.all([
       this.prisma.user.findMany({
         skip,
-        take: size,
+        take: Number(size),
         orderBy: { createdAt: order },
         where,
         select: {
