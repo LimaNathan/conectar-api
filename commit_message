@@ -1,8 +1,1 @@
-refactor: Torna CNPJ único e popula banco com dados de teste
-
-Este commit aprimora o modelo de dados e o ambiente de desenvolvimento.
-
-Principais alterações:
-
-- **Schema do Prisma:** Adiciona uma restrição de unicidade (`@unique`) ao campo `CNPJ` no modelo `Client` para garantir a integridade dos dados e evitar a duplicidade de clientes.
-- **Seed de Dados:** Atualiza o script de seed (`prisma/seed.ts`) para popular o banco de dados com 10 clientes de exemplo, facilitando testes e o desenvolvimento local. O script agora verifica a existência de um cliente pelo CNPJ antes de criá-lo.
+refactor: move a pasta prisma para o diretório src
