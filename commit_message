@@ -1,27 +1,8 @@
-feat: Implementa CRUD de Clientes e aprimora a API
+refactor: Torna CNPJ único e popula banco com dados de teste
 
-Este commit introduz a funcionalidade completa de CRUD para a entidade `Client`, juntamente com várias melhorias na API, incluindo tratamento de erros, autorização e documentação.
+Este commit aprimora o modelo de dados e o ambiente de desenvolvimento.
 
 Principais alterações:
 
-- **Módulo de Clientes:**
-  - Adiciona o `ClientsModule`, `ClientsController` e `ClientsService` para o gerenciamento completo de clientes.
-  - Implementa rotas para criar, buscar (com paginação e filtros), atualizar e deletar clientes.
-  - Adiciona a rota para vincular um usuário a um cliente.
-  - A busca paginada de clientes diferencia a visualização para administradores (todos os clientes) e usuários (clientes públicos ou aos quais estão vinculados).
-
-- **Autorização e Acesso:**
-  - As rotas de clientes são protegidas, exigindo autenticação.
-  - A exclusão de clientes e a vinculação de usuários a clientes são restritas a administradores (`ADMIN`).
-  - Usuários só podem editar clientes aos quais estão vinculados.
-
-- **Melhorias na API:**
-  - Adiciona um filtro de exceção global para erros do Prisma (`PrismaClientExceptionFilter`), melhorando o tratamento de erros de banco de dados.
-  - Aprimora a documentação do Swagger nos DTOs de `User` e `Auth` com descrições detalhadas.
-  - Corrige um bug na exclusão de usuários no `UserController`.
-  - Melhora a contagem na paginação de usuários.
-
-- **Banco de Dados:**
-  - Adiciona os campos `public` e `createdAt` à tabela `Client`.
-  - Torna o campo `joinedAt` na tabela `UserClient` obrigatório com um valor padrão.
-  - Renomeia o relacionamento `addresss` para `address` no modelo `Client` para corrigir um erro de digitação.
+- **Schema do Prisma:** Adiciona uma restrição de unicidade (`@unique`) ao campo `CNPJ` no modelo `Client` para garantir a integridade dos dados e evitar a duplicidade de clientes.
+- **Seed de Dados:** Atualiza o script de seed (`prisma/seed.ts`) para popular o banco de dados com 10 clientes de exemplo, facilitando testes e o desenvolvimento local. O script agora verifica a existência de um cliente pelo CNPJ antes de criá-lo.

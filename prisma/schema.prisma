@@ -28,7 +28,7 @@ enum Role {
 model Client {
     id               Int          @id @default(autoincrement())
     presentationName String?
-    CNPJ             String
+    CNPJ             String       @unique
     corporateReason  String
     address          Address      @relation(fields: [addressId], references: [id])
     addressId        Int
@@ -44,8 +44,8 @@ model UserClient {
     userId   Int
     clientId Int
     joinedAt DateTime @default(now())
-    user     User      @relation(fields: [userId], references: [id])
-    client   Client    @relation(fields: [clientId], references: [id])
+    user     User     @relation(fields: [userId], references: [id])
+    client   Client   @relation(fields: [clientId], references: [id])
 
     @@id([userId, clientId])
 }
