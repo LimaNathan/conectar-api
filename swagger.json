@@ -1,0 +1,633 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "operationId": "AuthController_singup",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Registrar um novo usuário (APENAS ADMINISTRADRES)",
+        "tags": [
+          "1. Auth"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthUserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Retorna um token JWT"
+          }
+        },
+        "summary": "Login do usuário.",
+        "tags": [
+          "1. Auth"
+        ]
+      }
+    },
+    "/user/paginated": {
+      "get": {
+        "operationId": "UserController_findAllPage",
+        "parameters": [
+          {
+            "name": "page",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "size",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "order",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "example": "desc",
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "example": "Nathan Lima",
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "example": "nathan.o.aguiar@gmail.com",
+              "type": "string"
+            }
+          },
+          {
+            "name": "role",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "example": "USER",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Busca os usuários do sistema de forma paginada.",
+        "tags": [
+          "2. User"
+        ]
+      }
+    },
+    "/user/paginated/inactive": {
+      "get": {
+        "operationId": "UserController_findAllPageWithoutLoginUntilThirtyDays",
+        "parameters": [
+          {
+            "name": "page",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "size",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "order",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "example": "desc",
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "example": "Nathan Lima",
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "example": "nathan.o.aguiar@gmail.com",
+              "type": "string"
+            }
+          },
+          {
+            "name": "role",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "example": "USER",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Busca os usuários do sistema de forma paginada.",
+        "tags": [
+          "2. User"
+        ]
+      }
+    },
+    "/user/{id}": {
+      "put": {
+        "operationId": "UserController_updateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário atualizado com sucesso!"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Atualiza os dados de um usuário",
+        "tags": [
+          "2. User"
+        ]
+      },
+      "delete": {
+        "operationId": "UserController_deleteUser",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Remove um usuário da base de dados..",
+        "tags": [
+          "2. User"
+        ]
+      }
+    },
+    "/clients": {
+      "post": {
+        "operationId": "ClientsController_singup",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientCreateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Cliente criado com sucesso."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Registrar um novo Client",
+        "tags": [
+          "3 .Clients"
+        ]
+      }
+    },
+    "/clients/paginated": {
+      "get": {
+        "operationId": "ClientsController_findAllPage",
+        "parameters": [
+          {
+            "name": "page",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "size",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "order",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "example": "desc",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Busca os usuários do sistema de forma paginada.",
+        "tags": [
+          "3 .Clients"
+        ]
+      }
+    },
+    "/clients/{id}": {
+      "put": {
+        "operationId": "ClientsController_updateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateClientDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário atualizado com sucesso!"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Atualiza os dados de um client",
+        "tags": [
+          "3 .Clients"
+        ]
+      },
+      "delete": {
+        "operationId": "ClientsController_delete",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Remove um cliente da base de dados (APENAS ADMINS)",
+        "tags": [
+          "3 .Clients"
+        ]
+      }
+    },
+    "/clients/addUser/{userId}/{clientId}": {
+      "put": {
+        "operationId": "ClientsController_addUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "clientId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Remove um cliente da base de dados (APENAS ADMINS)",
+        "tags": [
+          "3 .Clients"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "API Conéctar Clientes",
+    "description": "Documentação da API de controle de clientes para o teste técnico da Conéctar",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "UserCreateDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Nathan Lima",
+            "description": "Nome completo do usuário."
+          },
+          "email": {
+            "type": "string",
+            "example": "nathan.o.aguiar@gmail.com",
+            "description": "E-mail do usuário. Será utilizado como login."
+          },
+          "password": {
+            "type": "string",
+            "example": "123456",
+            "description": "Senha de acesso do usuário. Mínimo de 6 caracteres."
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password"
+        ]
+      },
+      "AuthUserDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "nathan.o.aguiar@gmail.com",
+            "description": "E-mail do usuário. Usado como identificador de login."
+          },
+          "password": {
+            "type": "string",
+            "example": "123456",
+            "description": "Senha do usuário. Deve conter ao menos 6 caracteres."
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "UserUpdateDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Nathan Lima",
+            "description": "Nome completo atualizado do usuário."
+          },
+          "email": {
+            "type": "string",
+            "example": "nathan.o.aguiar@gmail.com",
+            "description": "Novo e-mail do usuário. Deve ser válido e único."
+          },
+          "password": {
+            "type": "string",
+            "example": "novasenha123",
+            "description": "Nova senha do usuário. Mínimo de 6 caracteres."
+          }
+        }
+      },
+      "ClientCreateDTO": {
+        "type": "object",
+        "properties": {
+          "presentationName": {
+            "type": "string",
+            "example": "Conecta Agro LTDA",
+            "description": "Nome fantasia da empresa. Pode ser usado como nome de exibição."
+          },
+          "CNPJ": {
+            "type": "string",
+            "example": "12345678000199",
+            "description": "CNPJ da empresa, enviado apenas com números (sem pontuação)."
+          },
+          "corporateReason": {
+            "type": "string",
+            "example": "Conecta Agro Tecnologia e Soluções S.A.",
+            "description": "Razão social da empresa (nome jurídico)."
+          },
+          "address": {
+            "type": "object",
+            "description": "Objeto com os dados do endereço que será criado para este cliente."
+          },
+          "conectaPlus": {
+            "type": "boolean",
+            "example": true,
+            "description": "Indica se o cliente está integrado ao sistema Conecta Plus."
+          },
+          "tags": {
+            "example": [
+              "agro",
+              "clientes especiais"
+            ],
+            "description": "Lista de tags associadas ao cliente, úteis para filtros e buscas.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "CNPJ",
+          "corporateReason",
+          "address"
+        ]
+      },
+      "UpdateClientDTO": {
+        "type": "object",
+        "properties": {
+          "presentationName": {
+            "type": "string",
+            "example": "Conecta Agro LTDA",
+            "description": "Nome fantasia da empresa. Pode ser usado como nome de exibição."
+          },
+          "CNPJ": {
+            "type": "string",
+            "example": "12345678000199",
+            "description": "CNPJ da empresa, enviado apenas com números (sem pontuação)."
+          },
+          "corporateReason": {
+            "type": "string",
+            "example": "Conecta Agro Tecnologia e Soluções S.A.",
+            "description": "Razão social da empresa (nome jurídico)."
+          },
+          "address": {
+            "type": "object",
+            "description": "Objeto com os dados do endereço que será atualizado/criado para este cliente."
+          },
+          "conectaPlus": {
+            "type": "boolean",
+            "example": true,
+            "description": "Indica se o cliente está integrado ao sistema Conecta Plus."
+          },
+          "tags": {
+            "example": [
+              "agro",
+              "clientes especiais"
+            ],
+            "description": "Lista de tags associadas ao cliente, úteis para filtros e buscas.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

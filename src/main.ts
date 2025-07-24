@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AppModule } from './app.module';
+import { PrismaClientExceptionFilter } from './error/prisma-exception.filter';
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -14,7 +16,13 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
+
+  document.tags = document.tags?.sort((a, b) => a.name.localeCompare(b.name));
+
   SwaggerModule.setup('api', app, document);
+
+  app.useGlobalFilters(new PrismaClientExceptionFilter());
+  
   await app.listen(process.env.PORT ?? 3000);
 }
 

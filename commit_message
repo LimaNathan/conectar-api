@@ -1,13 +1,27 @@
-refactor: Melhora a paginação e a organização dos módulos
+feat: Implementa CRUD de Clientes e aprimora a API
 
-Este commit introduz uma série de melhorias na paginação e na organização geral da API.
+Este commit introduz a funcionalidade completa de CRUD para a entidade `Client`, juntamente com várias melhorias na API, incluindo tratamento de erros, autorização e documentação.
 
 Principais alterações:
 
-- **Paginação Refatorada:** A lógica de paginação foi aprimorada com a substituição do genérico `PaginationQueryDTO` por DTOs específicos para cada módulo, como o `UserPaginationQueryDTO`. Isso torna a validação e o tratamento dos parâmetros de consulta mais robustos e claros.
+- **Módulo de Clientes:**
+  - Adiciona o `ClientsModule`, `ClientsController` e `ClientsService` para o gerenciamento completo de clientes.
+  - Implementa rotas para criar, buscar (com paginação e filtros), atualizar e deletar clientes.
+  - Adiciona a rota para vincular um usuário a um cliente.
+  - A busca paginada de clientes diferencia a visualização para administradores (todos os clientes) e usuários (clientes públicos ou aos quais estão vinculados).
 
-- **Organização da API:** As `ApiTags` dos controladores foram renomeadas para incluir uma numeração, o que melhora a organização e a visualização da documentação gerada pelo Swagger.
+- **Autorização e Acesso:**
+  - As rotas de clientes são protegidas, exigindo autenticação.
+  - A exclusão de clientes e a vinculação de usuários a clientes são restritas a administradores (`ADMIN`).
+  - Usuários só podem editar clientes aos quais estão vinculados.
 
-- **Módulo de Usuários:** O serviço de clientes foi atualizado para incluir um método de busca paginada (`findAllPaginated`) com filtros, preparando o terreno para a implementação completa do CRUD de clientes.
+- **Melhorias na API:**
+  - Adiciona um filtro de exceção global para erros do Prisma (`PrismaClientExceptionFilter`), melhorando o tratamento de erros de banco de dados.
+  - Aprimora a documentação do Swagger nos DTOs de `User` e `Auth` com descrições detalhadas.
+  - Corrige um bug na exclusão de usuários no `UserController`.
+  - Melhora a contagem na paginação de usuários.
 
-- **Serviço de Usuário:** Foi feita uma pequena correção no serviço de usuário para garantir que o parâmetro `size` da paginação seja sempre tratado como um número, evitando possíveis erros em tempo de execução.
+- **Banco de Dados:**
+  - Adiciona os campos `public` e `createdAt` à tabela `Client`.
+  - Torna o campo `joinedAt` na tabela `UserClient` obrigatório com um valor padrão.
+  - Renomeia o relacionamento `addresss` para `address` no modelo `Client` para corrigir um erro de digitação.

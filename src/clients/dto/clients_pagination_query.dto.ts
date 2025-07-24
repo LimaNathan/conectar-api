@@ -33,7 +33,7 @@ export class ClientsPaginationQueryDTO {
   @IsOptional()
   @IsString()
   presentationName?: string;
-  
+
   @IsOptional()
   @IsString()
   cnpj?: string;

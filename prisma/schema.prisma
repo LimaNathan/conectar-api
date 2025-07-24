@@ -30,18 +30,20 @@ model Client {
     presentationName String?
     CNPJ             String
     corporateReason  String
-    addresss         Address      @relation(fields: [addressId], references: [id])
+    address          Address      @relation(fields: [addressId], references: [id])
     addressId        Int
+    public           Boolean      @default(false)
     conectaPlus      Boolean?     @default(false)
     clienStatus      ClientStatus @default(INACTIVE)
     tags             String[]
     UserClient       UserClient[]
+    createdAt        DateTime     @default(now())
 }
 
 model UserClient {
     userId   Int
     clientId Int
-    joinedAt DateTime?
+    joinedAt DateTime @default(now())
     user     User      @relation(fields: [userId], references: [id])
     client   Client    @relation(fields: [clientId], references: [id])
 

@@ -32,7 +32,7 @@ export class UserService {
   }
 
   async updateUser(
-    dto: UserUpdateDTO,
+    data: UserUpdateDTO,
     id: number,
     targetUserId: number,
     userRole: Role,
@@ -53,16 +53,12 @@ export class UserService {
     }
     const updateData: any = {};
 
-    if (dto.email && isAdmin) {
-      updateData.email = dto.email;
-    }
+    if (data.email && isAdmin) updateData.email = data.email;
 
-    if (dto.name) {
-      updateData.name = dto.name;
-    }
-    if (dto.password) {
-      updateData.password = await bcrypt.hash(dto.password, 10);
-    }
+    if (data.name) updateData.name = data.name;
+
+    if (data.password)
+      updateData.password = await bcrypt.hash(data.password, 10);
 
     return this.prisma.user.update({
       where: { id: targetUserId },
@@ -125,7 +121,7 @@ export class UserService {
         },
       }),
 
-      this.prisma.user.count(),
+      this.prisma.user.count({ where }),
     ]);
 
     return {
