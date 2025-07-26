@@ -41,7 +41,7 @@ export class ClientsController {
     return this.clientService.create(body);
   }
 
-  @ApiOperation({ summary: 'Busca os usuários do sistema de forma paginada.' })
+  @ApiOperation({ summary: 'Busca os clients do sistema de forma paginada.' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get('/paginated')
