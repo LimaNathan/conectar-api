@@ -38,6 +38,7 @@ export class ClientsPaginationQueryDTO {
   @IsOptional()
   @IsString()
   cnpj?: string;
+  
   @IsOptional()
   @IsString()
   corporateReason?: string;

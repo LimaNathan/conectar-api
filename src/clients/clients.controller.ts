@@ -58,6 +58,7 @@ export class ClientsController {
       tags,
       conectaPlus,
       status,
+      cnpj
     } = query;
     const currentUser = req.user;
     const filters = {
@@ -66,6 +67,7 @@ export class ClientsController {
       tags,
       status,
       conectaPlus,
+      cnpj,
     };
     return this.clientService.findAllPaginated(
       page,

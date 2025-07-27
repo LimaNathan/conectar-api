@@ -1,5 +1,13 @@
-docs: Adiciona documentação de testes necessários
+# feat: Adiciona relacionamentos e filtros de clientes
 
-Este commit adiciona o arquivo `testes_necessarios.md`, que documenta as áreas do código que precisam de testes para aumentar a cobertura.
+Este commit introduz as seguintes funcionalidades e melhorias:
 
-Além disso, inclui uma pequena refatoração no `clients.controller.ts` para remover um método duplicado.
+- **Relacionamento de Usuários e Clientes:**
+  - Adiciona um relacionamento explícito entre usuários e clientes no `schema.prisma`.
+  - Cria o método `addUserToClient` no `clients.service.ts` e `clients.controller.ts` para associar um usuário a um cliente.
+
+- **Filtros de Clientes:**
+  - Adiciona o campo `CNPJ` ao `clients_pagination_query.dto.ts` para permitir a filtragem de clientes por CNPJ.
+
+- **Refatorações e Melhorias:**
+  - Remove o arquivo `commit_message` do versionamento.

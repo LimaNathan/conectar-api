@@ -31,6 +31,7 @@ export class ClientsService {
       presentationName?: string;
       status?: boolean;
       conectaPlus?: boolean;
+      cnpj?: string;
     },
   ) {
     const isAdmin = userRole === 'ADMIN';
@@ -66,6 +67,12 @@ export class ClientsService {
         mode: 'insensitive',
       };
     }
+    if (filters?.cnpj) {
+      where.CNPJ = {
+        contains: filters.cnpj,
+        mode: 'insensitive',
+      };
+    }
 
     if (filters?.corporateReason) {
       where.corporateReason = {
@@ -82,7 +89,7 @@ export class ClientsService {
     }
 
     if (filters?.status != null) {
-      where.status = {
+      where.clientStatus = {
         contains: filters.status ? 'ACTIVE' : 'INACTIVE',
         mode: 'insensitive',
       };
@@ -106,7 +113,7 @@ export class ClientsService {
           corporateReason: true,
           CNPJ: true,
           public: true,
-          clienStatus: true,
+          clientStatus: true,
           conectaPlus: true,
           tags: true,
           address: true,
