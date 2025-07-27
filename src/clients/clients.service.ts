@@ -29,6 +29,8 @@ export class ClientsService {
       corporateReason?: string;
       tags?: string[];
       presentationName?: string;
+      status?: boolean;
+      conectaPlus?: boolean;
     },
   ) {
     const isAdmin = userRole === 'ADMIN';
@@ -79,7 +81,17 @@ export class ClientsService {
       };
     }
 
-    if (!isAdmin) {
+    if (filters?.status != null) {
+      where.status = {
+        contains: filters.status ? 'ACTIVE' : 'INACTIVE',
+        mode: 'insensitive',
+      };
+    }
+    if (filters?.conectaPlus != null) {
+      where.status = {
+        contains: filters.conectaPlus,
+        mode: 'insensitive',
+      };
     }
 
     const [clients, total] = await Promise.all([

@@ -34,7 +34,7 @@ model Client {
     addressId        Int
     public           Boolean      @default(false)
     conectaPlus      Boolean?     @default(false)
-    clienStatus      ClientStatus @default(INACTIVE)
+    clienStatus      ClientStatus @default(ACTIVE)
     tags             String[]
     UserClient       UserClient[]
     createdAt        DateTime     @default(now())

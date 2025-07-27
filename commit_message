@@ -1,1 +1,5 @@
-refactor: move a pasta prisma para fora do diretório src
+docs: Adiciona documentação de testes necessários
+
+Este commit adiciona o arquivo `testes_necessarios.md`, que documenta as áreas do código que precisam de testes para aumentar a cobertura.
+
+Além disso, inclui uma pequena refatoração no `clients.controller.ts` para remover um método duplicado.

@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsArray,
+  IsBoolean,
   IsEnum,
   IsInt,
   IsOptional,
@@ -44,4 +45,12 @@ export class ClientsPaginationQueryDTO {
   @IsOptional()
   @IsArray()
   tags?: string[];
+
+  @IsOptional()
+  @IsBoolean()
+  conectaPlus?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  status?: boolean;
 }

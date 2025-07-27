@@ -49,13 +49,23 @@ export class ClientsController {
     @Query() query: ClientsPaginationQueryDTO,
     @Request() req: any,
   ) {
-    const { page, size, order, presentationName, corporateReason, tags } =
-      query;
+    const {
+      page,
+      size,
+      order,
+      presentationName,
+      corporateReason,
+      tags,
+      conectaPlus,
+      status,
+    } = query;
     const currentUser = req.user;
     const filters = {
       presentationName,
       corporateReason,
       tags,
+      status,
+      conectaPlus,
     };
     return this.clientService.findAllPaginated(
       page,
