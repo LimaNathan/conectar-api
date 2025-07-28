@@ -15,6 +15,9 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
 
+
+
+
   const document = SwaggerModule.createDocument(app, config);
 
   document.tags = document.tags?.sort((a, b) => a.name.localeCompare(b.name));
@@ -22,7 +25,17 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.useGlobalFilters(new PrismaClientExceptionFilter());
-  
+
+    app.enableCors({
+      origin: [
+        'conectar-fe.vercel.app',
+        'https://conectar-fe-limanathans-projects.vercel.app/',
+      ],
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      credentials: true,
+    });
+
+
   await app.listen(process.env.PORT ?? 3000);
 }
 
