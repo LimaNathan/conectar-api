@@ -3,10 +3,6 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "assets": [
-      "**/*.hbs",
-      "**/*.json"
-    ],
-    "watchAssets": true
+    "deleteOutDir": true
   }
 }
