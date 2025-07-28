@@ -38,6 +38,8 @@ export class ClientsController {
   @UseGuards(JwtAuthGuard)
   @Post()
   singup(@Body() body: ClientCreateDTO) {
+    console.log(body);
+
     return this.clientService.create(body);
   }
 
@@ -58,7 +60,7 @@ export class ClientsController {
       tags,
       conectaPlus,
       status,
-      cnpj
+      cnpj,
     } = query;
     const currentUser = req.user;
     const filters = {
@@ -79,40 +81,22 @@ export class ClientsController {
     );
   }
 
-  @ApiOperation({ summary: 'Atualiza os dados de um usuário' })
+  @ApiOperation({ summary: 'Atualiza os dados de um client' })
   @ApiBearerAuth()
-  @ApiResponse({ status: 200, description: 'Usuário atualizado com sucesso!' })
+  @ApiResponse({ status: 200, description: 'Cliente atualizado com sucesso!' })
   @UseGuards(JwtAuthGuard)
   @Put(':id')
   async update(
-    @Body() body: UpdateClientDTO,
-    @Request() req: any,
-    @Param('id') clientId: number,
-  ) {
-    const currentUser = req.user;
-    return this.clientService.updateClient(
-      body,
-      currentUser.id,
-      clientId,
-      currentUser.role,
-    );
-  }
-
-  @ApiOperation({ summary: 'Atualiza os dados de um client' })
-  @ApiBearerAuth()
-  @ApiResponse({ status: 200, description: 'Usuário atualizado com sucesso!' })
-  @UseGuards(JwtAuthGuard)
-  @Put(':id')
-  async updateUser(
     @Param('id') id: number,
     @Body() body: UpdateClientDTO,
     @Request() req: any,
   ) {
     const currentUser = req.user;
+    console.log(body);
     return this.clientService.updateClient(
       body,
-      id,
-      currentUser.id,
+      Number(id),
+      currentUser.userId,
       currentUser.role,
     );
   }
@@ -123,14 +107,14 @@ export class ClientsController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
-  @Delete(':id')
+  @Delete()
   async delete(@Query('id') id: number) {
-    return this.clientService.deleteClient(id);
+    return this.clientService.deleteClient(Number(id));
   }
   @ApiOperation({
     summary: 'Remove um cliente da base de dados (APENAS ADMINS)',
   })
-  @Put()
+  @Put('/user')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')

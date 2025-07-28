@@ -14,6 +14,8 @@ export class ClientsService {
   constructor(private prisma: PrismaService) {}
 
   async create(data: ClientCreateDTO) {
+    console.log(data);
+
     return this.prisma.client.create({
       data: data,
     });
@@ -82,22 +84,39 @@ export class ClientsService {
     }
 
     if (filters?.tags) {
+      const tagsArray = Array.isArray(filters.tags)
+        ? filters.tags
+        : [filters.tags];
+
       where.tags = {
-        contains: filters.tags,
-        mode: 'insensitive',
+        hasSome: tagsArray,
       };
     }
 
+    function parseBoolean(value: unknown): boolean | null {
+      if (typeof value === 'boolean') return value;
+      if (typeof value === 'string') {
+        if (value.toLowerCase() === 'true') return true;
+        if (value.toLowerCase() === 'false') return false;
+      }
+      if (typeof value === 'number') {
+        return value === 1;
+      }
+      return null;
+    }
+
     if (filters?.status != null) {
+      const status = parseBoolean(filters.status);
       where.clientStatus = {
-        contains: filters.status ? 'ACTIVE' : 'INACTIVE',
-        mode: 'insensitive',
+        equals: status ? 'ACTIVE' : 'INACTIVE',
       };
     }
+
     if (filters?.conectaPlus != null) {
-      where.status = {
-        contains: filters.conectaPlus,
-        mode: 'insensitive',
+      const conectaPlus = parseBoolean(filters.conectaPlus);
+
+      where.conectaPlus = {
+        equals: conectaPlus,
       };
     }
 
@@ -140,6 +159,7 @@ export class ClientsService {
     userRole: Role,
   ) {
     const isAdmin = userRole === 'ADMIN';
+
     const userCanEdit = await this.prisma.userClient.findUnique({
       where: {
         userId_clientId: {
@@ -161,7 +181,8 @@ export class ClientsService {
 
     if (data.address) updateData.address = data.address;
 
-    if (data.conectaPlus) updateData.conectaPlus = data.conectaPlus;
+    if (data.conectaPlus != null)
+      updateData.conectaPlus = Boolean(data.conectaPlus);
 
     if (data.corporateReason) updateData.corporateReason = data.corporateReason;
 
@@ -179,6 +200,7 @@ export class ClientsService {
   }
 
   async deleteClient(clientId: number) {
+    
     await this.prisma.userClient.deleteMany({
       where: {
         clientId: clientId,
