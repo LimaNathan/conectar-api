@@ -1,13 +1,13 @@
-# feat: Adiciona relacionamentos e filtros de clientes
+feat(user): Adiciona o nome do usuário ao token JWT e permite a alteração de role por administradores
 
-Este commit introduz as seguintes funcionalidades e melhorias:
+- Adiciona o campo `name` ao payload do token JWT para que o nome do usuário esteja disponível no frontend sem a necessidade de uma nova requisição.
+- Permite que administradores alterem a `role` de outros usuários através do `updateUser`.
 
-- **Relacionamento de Usuários e Clientes:**
-  - Adiciona um relacionamento explícito entre usuários e clientes no `schema.prisma`.
-  - Cria o método `addUserToClient` no `clients.service.ts` e `clients.controller.ts` para associar um usuário a um cliente.
+fix(user): Corrige a exclusão de usuários e o tipo de parâmetro em rotas
 
-- **Filtros de Clientes:**
-  - Adiciona o campo `CNPJ` ao `clients_pagination_query.dto.ts` para permitir a filtragem de clientes por CNPJ.
+- Garante que, ao excluir um usuário, todas as suas associações com clientes (`UserClient`) sejam removidas primeiro, evitando erros de chave estrangeira.
+- Converte o parâmetro `id` para `Number` nas rotas `updateUser` e `deleteUser` do `UserController` para garantir o funcionamento correto.
 
-- **Refatorações e Melhorias:**
-  - Remove o arquivo `commit_message` do versionamento.
+fix(clients): Melhora a mensagem de erro de permissão
+
+- Altera a mensagem de erro ao tentar editar um cliente sem permissão para ser mais clara e informativa.

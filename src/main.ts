@@ -28,7 +28,7 @@ async function bootstrap() {
 
     app.enableCors({
       origin: [
-        'conectar-fe.vercel.app',
+        'https://conectar-fe.vercel.app',
         'https://conectar-fe-limanathans-projects.vercel.app/',
       ],
       methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
