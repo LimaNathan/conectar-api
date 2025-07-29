@@ -1,4 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Role } from '@prisma/client';
 import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
 
 export class UserUpdateDTO {
@@ -25,4 +26,10 @@ export class UserUpdateDTO {
   @IsOptional()
   @MinLength(6, { message: 'A senha deve conter pelo menos 6 caracteres.' })
   password?: string;
+  @ApiPropertyOptional({
+    example: 'USER',
+    description: 'Role do usuário, só pode ser alterada por um ADMIN',
+  })
+  @IsOptional()
+  role?: Role;
 }

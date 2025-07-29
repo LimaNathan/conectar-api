@@ -171,7 +171,7 @@ export class ClientsService {
 
     if (!userCanEdit && !isAdmin) {
       throw new ForbiddenException(
-        'Você não pode alterar esse cliente, entre em contato com seu superiror',
+        'Você não pode alterar esse cliente, entre em contato com seu superior',
       );
     }
 
@@ -192,15 +192,12 @@ export class ClientsService {
     if (data.tags) updateData.tags = data.tags;
 
     return this.prisma.client.update({
-      where: {
-        id: clientId,
-      },
+      where: { id: clientId },
       data: updateData,
     });
   }
 
   async deleteClient(clientId: number) {
-    
     await this.prisma.userClient.deleteMany({
       where: {
         clientId: clientId,

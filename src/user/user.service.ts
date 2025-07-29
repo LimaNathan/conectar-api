@@ -37,6 +37,10 @@ export class UserService {
     targetUserId: number,
     userRole: Role,
   ) {
+
+    const isAdmin = userRole === 'ADMIN';
+    const isSelf = id === targetUserId;
+
     const targetUser = await this.prisma.user.findUnique({
       where: { id: targetUserId },
     });
@@ -45,8 +49,6 @@ export class UserService {
       throw new NotFoundException('Usuário não encontrado.');
     }
 
-    const isAdmin = userRole === 'ADMIN';
-    const isSelf = id === targetUserId;
 
     if (!isSelf && !isAdmin) {
       throw new ForbiddenException('Você só pode editar sua própria conta.');
@@ -59,6 +61,8 @@ export class UserService {
 
     if (data.password)
       updateData.password = await bcrypt.hash(data.password, 10);
+
+    if (data.role) updateData.role = data.role;
 
     return this.prisma.user.update({
       where: { id: targetUserId },
@@ -74,6 +78,11 @@ export class UserService {
   }
 
   async deleteUser(userId: number): Promise<void> {
+    await this.prisma.userClient.deleteMany({
+      where: {
+        userId: userId,
+      },
+    });
     await this.prisma.user.delete({
       where: { id: userId },
     });

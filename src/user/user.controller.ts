@@ -79,7 +79,7 @@ export class UserController {
     return this.userService.updateUser(
       body,
       currentUser.userId,
-      id,
+      Number(id),
       currentUser.role,
     );
   }
@@ -88,8 +88,8 @@ export class UserController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
-  @Delete(':id')
+  @Delete()
   async deleteUser(@Query('id') id: number) {
-    return this.userService.deleteUser(id);
+    return this.userService.deleteUser(Number(id));
   }
 }

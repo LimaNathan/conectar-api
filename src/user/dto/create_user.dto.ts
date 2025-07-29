@@ -1,5 +1,6 @@
-import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Role } from '@prisma/client';
 
 export class UserCreateDTO {
   @ApiProperty({
@@ -8,6 +9,12 @@ export class UserCreateDTO {
   })
   @IsNotEmpty({ message: 'O nome não pode ficar vazio.' })
   name: string;
+  @ApiProperty({
+    example: 'Nathan Lima',
+    description: 'Nome completo do usuário.',
+  })
+  @IsOptional()
+  role?: Role;
 
   @ApiProperty({
     example: 'nathan.o.aguiar@gmail.com',
